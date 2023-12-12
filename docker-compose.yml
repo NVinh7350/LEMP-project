@@ -1,0 +1,33 @@
+version: '3'
+services:
+    nginx:
+        image: nginx:latest
+        container_name: nginx_container
+        ports:
+            - "80:80"
+        volumes:
+          - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+          - ./app:/app
+    php:
+        container_name: php_container
+        build:
+          context: .
+          dockerfile: php.Dockerfile
+        volumes:
+          - ./app:/app
+    db:
+        image: mysql:8.0
+        container_name: mysql_container
+        restart: always
+        environment:
+          - MYSQL_DATABASE=ROOT
+          - MYSQL_ROOT_PASSWORD=123123
+          - MYSQL_MAJOR=8.0
+          - MYSQL_VERSION=8.0.33-1.el8
+        ports:
+          - '3306:3306'
+        volumes:
+          - db:/var/lib/mysql
+          - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  db: {}
