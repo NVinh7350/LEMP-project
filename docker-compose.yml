@@ -3,18 +3,22 @@ services:
     nginx:
         image: nginx:latest
         container_name: nginx_container
+        restart: always
         ports:
             - "80:80"
         volumes:
           - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
-          - ./app:/app
+          - ./app/public:/var/www/html
     php:
         container_name: php_container
+        restart: always
         build:
           context: .
           dockerfile: php.Dockerfile
         volumes:
-          - ./app:/app
+          - ./app/public:/var/www/html
+        extra_hosts:
+          - host.docker.internal:host-gateway
     db:
         image: mysql:8.0
         container_name: mysql_container

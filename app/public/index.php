@@ -8,23 +8,22 @@
 </head>
 
 <body>
-    <?php
-    $user = "root";
-    $password = "123123";
-    $database = "ROOT";
-    $table = "user";
-
-    try {
-        $db = new PDO("mysql:host=192.168.209.131;dbname=$database", $user, $password);
-        echo "<h2>TODO</h2><ol>";
-        foreach ($db->query("SELECT name FROM $table") as $row) {
-            echo "<li>" . $row['name'] . "</li>";
-        }
-        echo "</ol>";
-    } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
-        die();
-    } ?>
+    <?php 
+        $x = 10;
+        $myArray = array();
+        // Ví dụ PHP
+        function addItemsToMyArray() {
+            $x = 20;
+            global $myArray;
+            $myArray[] = 'apple';
+            $myArray[] = 'banana';
+            $myArray[] = 'coconut';
+            echo $x;
+            return $myArray;
+        }  
+        
+        $myArray = addItemsToMyArray();
+        echo count($myArray);
+    ?>
 </body>
-
 </html>
